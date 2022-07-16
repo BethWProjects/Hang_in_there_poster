@@ -133,7 +133,7 @@ nevermindButton.addEventListener('click', nvmReturn)
 showPosterButton.addEventListener('click', createPosterOne)
 savePosterButton.addEventListener('click', savePoster)
 savedButton.addEventListener('click', displaySavedPosters)
-posterGrid.addEventListener('dblclick', deletePoster)
+
 
 
 // functions and event handlers go here 👇
@@ -207,23 +207,25 @@ function displaySavedPosters() {
   posterGrid.innerHTML = ""
   for (var i = 0; i < savedPosters.length; i++) {
       posterGrid.innerHTML += `<article class="mini-poster" id="${savedPosters[i].id}">
-  <img class="mini-poster-img" src="${savedPosters[i].imageURL}" alt="nothin' to see here">
+  <img class="mini-poster-img" src="${savedPosters[i].imageURL}" alt="nothin' to see here"/>
   <h2 class="mini-poster-title">${savedPosters[i].title}</h2>
   <h4 class="mini-poster-quote">${savedPosters[i].quote}</h4>  </article>`
   }
+  searchMiniPosterGrid()
 }
 
-// function deletePoster() {
-// // if (posterGrid.hasAttribute('class')) {
-// //     posterGrid.removeAttribute('class')
-// //   }  //SORT OF WORKS, IT MOVES THE POSTER TO ANOTHER LINE
-//
-//   var deletePost = event.currentTarget.id
-//   for (var i = 0; i < savedPosters.length; i++) {
-//     if (`${savedPosters[i].id}` === deletePost) {
-//     savedPosters.splice(i, 1)
-//     }
-//   }
-//   console.log('hello')
-//   //displaySavedPosters()
-// }
+function searchMiniPosterGrid(){
+  var miniPoster = document.querySelectorAll('.mini-poster');
+  for (var i = 0; i < miniPoster.length; i++) {
+    miniPoster[i].addEventListener('dblclick', deletePoster)
+  }
+}
+
+function deletePoster() {
+  for (var i = 0; i < savedPosters.length; i++) {
+    if (savedPosters[i].id == event.currentTarget.id) {
+      savedPosters.splice(i, 1)
+    }
+  }
+  displaySavedPosters()
+}
